@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { motion } from "framer-motion"
+import { FaInstagram, FaLinkedin } from "react-icons/fa"
 
 export default function Footer() {
   return (
@@ -28,27 +29,31 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Social Links Placeholder */}
-        <div className="flex gap-6 text-sm">
-          <motion.a 
-            whileHover={{ y:-3 }}
-            href="#"
+        {/* Social Icons */}
+        <div className="flex gap-6">
+          
+          <motion.a
+            whileHover={{ y: -3 }}
+            href="https://www.linkedin.com/in/z%C3%A8le-learning-5a293a3a6"
             target="_blank"
             rel="noopener noreferrer"
             className="text-emerald-200 hover:text-white transition"
+            aria-label="LinkedIn"
           >
-            LinkedIn
+            <FaLinkedin size={20} />
           </motion.a>
 
-          <motion.a 
-            whileHover={{ y:-3 }}
+          <motion.a
+            whileHover={{ y: -3 }}
             href="https://www.instagram.com/zelelearning"
             target="_blank"
             rel="noopener noreferrer"
             className="text-emerald-200 hover:text-white transition"
+            aria-label="Instagram"
           >
-            Instagram
+            <FaInstagram size={20} />
           </motion.a>
+
         </div>
 
       </div>

@@ -16,8 +16,11 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Zele Learning",
+  title: "Zèle Learning",
   description: "Future-ready corporate training",
+  icons: {
+    icon: "/favicon.ico",
+  },
 }
 
 export default function RootLayout({
