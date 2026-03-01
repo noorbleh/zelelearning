@@ -4,7 +4,6 @@ import "./globals.css"
 import SmoothScroll from "./components/SmoothScroll"
 import Navbar from "./components/Navbar"
 
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -16,8 +15,9 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Zèle Learning",
-  description: "Future-ready corporate training",
+  title: "Zèle Learning | Corporate Training, Vacation Learning & Professional Development",
+  description:
+    "Zèle Learning is a corporate training company offering industry-focused training programs, vacation learning courses, and professional development solutions for students and professionals across technology, architecture, and emerging domains.",
   icons: {
     icon: "/favicon.ico",
   },
