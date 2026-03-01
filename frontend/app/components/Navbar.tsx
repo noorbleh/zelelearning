@@ -36,6 +36,7 @@ export default function Navbar() {
             <Link href="/courses" className="hover:text-[#304635] transition">Courses</Link>
             <Link href="/about" className="hover:text-[#304635] transition">About</Link>
             <Link href="/contact" className="hover:text-[#304635] transition">Contact</Link>
+            <Link href="/vacation-learning" className="hover:text-[#304635] transition">Vacation Learning</Link>
           </div>
 
           {/* Desktop CTA */}
