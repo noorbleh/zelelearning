@@ -1,3 +1,8 @@
+export const metadata = {
+  title: "Corporate Training Programs | Zele Learning",
+  description: "Corporate training through travel-based learning experiences for teams and organizations.",
+}
+
 "use client"
 
 import { motion } from "framer-motion"
@@ -15,7 +20,7 @@ export default function VacationLearningPage() {
         {/* Background Image */}
         <img
           src="/vacation.jpg"
-          alt="Luxury travel"
+          alt="corporate training vacation learning program"
           className="absolute inset-0 w-full h-full object-cover z-0"
         />
 
