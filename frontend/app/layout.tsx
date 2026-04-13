@@ -20,6 +20,8 @@ export const metadata: Metadata = {
     "Zèle Learning is a corporate training company offering industry-focused training programs, vacation learning courses, and professional development solutions for students and professionals across technology, architecture, and emerging domains.",
   icons: {
     icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
   },
 }
 
