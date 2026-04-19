@@ -39,7 +39,7 @@ export default function Footer() {
           
           <motion.a
             whileHover={{ y: -3 }}
-            href="https://www.linkedin.com/in/z%C3%A8le-learning-5a293a3a6"
+            href="https://www.linkedin.com/in/zele-learning-5a293a3a6?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
             target="_blank"
             rel="noopener noreferrer"
             className="text-emerald-200 hover:text-white transition"
