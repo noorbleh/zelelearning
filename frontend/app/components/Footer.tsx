@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { FaInstagram, FaLinkedin } from "react-icons/fa"
+import { FaInstagram, FaLinkedin, FaWhatsapp } from "react-icons/fa"
 
 export default function Footer() {
   return (
@@ -15,6 +15,11 @@ export default function Footer() {
           <h3 className="text-lg font-semibold">Zele Learning</h3>
           <p className="mt-2 text-sm text-emerald-200">
             Corporate training & consulting.
+          </p>
+
+          {/* Call Info */}
+          <p className="mt-3 text-sm text-emerald-200">
+            Call (India): <a href="tel:+919560097533" className="hover:text-white">+91 9560097533</a>
           </p>
         </div>
 
@@ -52,6 +57,17 @@ export default function Footer() {
             aria-label="Instagram"
           >
             <FaInstagram size={20} />
+          </motion.a>
+
+          <motion.a
+            whileHover={{ y: -3 }}
+            href="https://wa.me/919560097533?text=Hello!%20Can%20i%20have%20the%20course%20list%3F"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-emerald-200 hover:text-white transition"
+            aria-label="WhatsApp"
+          >
+            <FaWhatsapp size={20} />
           </motion.a>
 
         </div>
