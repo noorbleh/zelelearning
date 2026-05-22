@@ -1,7 +1,8 @@
 export default {
   name: "course",
-  title: "Course",
+  title: "Courses",
   type: "document",
+
   fields: [
     {
       name: "title",
@@ -14,64 +15,19 @@ export default {
       name: "slug",
       title: "Slug",
       type: "slug",
-      options: { source: "title" },
-      validation: (Rule) => Rule.required(),
-    },
-
-    {
-      name: "shortDescription",
-      title: "Short Description",
-      type: "text",
-      rows: 3,
-      description: "Shown on course cards and hero section",
-      validation: (Rule) => Rule.required(),
-    },
-
-    {
-      name: "longDescription",
-      title: "Detailed Course Description",
-      type: "array",
-      of: [{ type: "block" }],
-      description: "Full description shown on the course detail page",
-      validation: (Rule) => Rule.required(),
-    },
-
-    {
-      name: "duration",
-      title: "Duration",
-      type: "string",
-      description: "Example: 8 weeks, 40 hours",
-    },
-
-    {
-      name: "deliveryMode",
-      title: "Delivery Mode",
-      type: "array",
-      of: [{ type: "string" }],
       options: {
-        list: [
-          { title: "Online", value: "Online" },
-          { title: "Offline", value: "Offline" },
-          { title: "Hybrid", value: "Hybrid" },
-        ],
+        source: "title",
+        maxLength: 96,
       },
-      description: "How this course is delivered",
       validation: (Rule) => Rule.required(),
     },
 
     {
-      name: "category",
-      title: "Category",
-      type: "string",
-      description: "Architecture, Interior Design, BIM, AI, Finance, etc.",
-    },
-
-    {
-      name: "software",
-      title: "Software Covered",
-      type: "array",
-      of: [{ type: "string" }],
-      description: "Example: SketchUp, Revit, Rhino",
+      name: "topic",
+      title: "Topic",
+      type: "reference",
+      to: [{ type: "topic" }],
+      validation: (Rule) => Rule.required(),
     },
 
     {
@@ -84,16 +40,43 @@ export default {
           { title: "Intermediate", value: "Intermediate" },
           { title: "Advanced", value: "Advanced" },
         ],
-        layout: "radio",
+        layout: "dropdown",
       },
     },
 
     {
-      name: "targetAudience",
-      title: "Target Audience",
-      type: "array",
-      of: [{ type: "string" }],
-      description: "Architects, Interior Designers, Engineers, Students, etc.",
+      name: "order",
+      title: "Course Order",
+      type: "number",
+      description:
+        "Lower numbers appear first on the website.",
+    },
+
+    {
+      name: "shortDescription",
+      title: "Short Description",
+      type: "text",
+      rows: 3,
+    },
+
+    {
+      name: "description",
+      title: "Full Description",
+      type: "text",
+      rows: 6,
+    },
+
+    {
+      name: "duration",
+      title: "Duration",
+      type: "string",
+    },
+
+    {
+      name: "overview",
+      title: "Course Overview",
+      type: "text",
+      rows: 8,
     },
 
     {
@@ -101,15 +84,20 @@ export default {
       title: "Learning Outcomes",
       type: "array",
       of: [{ type: "string" }],
-      description: "What the learner will be able to do after completing the course",
     },
 
     {
-      name: "topic",
-      title: "Topic",
-      type: "reference",
-      to: [{ type: "topic" }],
-      validation: (Rule) => Rule.required(),
+      name: "prerequisites",
+      title: "Prerequisites",
+      type: "text",
+      rows: 4,
     },
   ],
-};
+
+  preview: {
+    select: {
+      title: "title",
+      subtitle: "level",
+    },
+  },
+}

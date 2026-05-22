@@ -1,4 +1,7 @@
-import topic from "./topic"
 import course from "./course"
+import topic from "./topic"
 
-export const schemaTypes = [topic, course]
+export const schemaTypes = [
+  topic,
+  course,
+]

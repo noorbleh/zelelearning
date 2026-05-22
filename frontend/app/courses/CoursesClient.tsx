@@ -7,6 +7,9 @@ import Footer from "@/app/components/Footer"
 
 export default function CoursesClient({ topics }: { topics: any[] }) {
   const [search, setSearch] = useState("")
+  const [selectedLevel, setSelectedLevel] = useState("All")
+
+  const levels = ["All", "Beginner", "Intermediate", "Advanced"]
 
   return (
     <main className="bg-[#f4efe9] min-h-screen text-gray-800 overflow-hidden">
@@ -39,16 +42,44 @@ export default function CoursesClient({ topics }: { topics: any[] }) {
             "
           />
         </div>
+
+        {/* FILTERS */}
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
+          {levels.map((level) => (
+            <button
+              key={level}
+              onClick={() => setSelectedLevel(level)}
+              className={`
+                px-5 py-2 rounded-full text-sm font-medium transition
+                ${
+                  selectedLevel === level
+                    ? "bg-[#304635] text-white"
+                    : "bg-white/80 border border-[#304635]/20 text-[#304635] hover:bg-white"
+                }
+              `}
+            >
+              {level}
+            </button>
+          ))}
+        </div>
       </section>
 
       {/* TOPICS */}
       <section className="space-y-24 pb-28">
 
         {topics.map((topic, i) => {
-          // Filter courses by search
-          const filtered = topic.courses.filter((c: any) =>
-            c.title.toLowerCase().includes(search.toLowerCase())
-          )
+          // Filter courses by search + level
+          const filtered = topic.courses.filter((c: any) => {
+            const matchesSearch = c.title
+              .toLowerCase()
+              .includes(search.toLowerCase())
+
+            const matchesLevel =
+              selectedLevel === "All" ||
+              c.level === selectedLevel
+
+            return matchesSearch && matchesLevel
+          })
 
           if (filtered.length === 0) return null
 
@@ -93,6 +124,13 @@ export default function CoursesClient({ topics }: { topics: any[] }) {
                       "
                     >
                       <div>
+                        {/* LEVEL BADGE */}
+                        {course.level && (
+                          <span className="inline-block mb-3 px-3 py-1 rounded-full bg-[#edf2ea] text-[#304635] text-xs font-semibold">
+                            {course.level}
+                          </span>
+                        )}
+
                         <h3 className="text-lg font-semibold text-[#304635]">
                           {course.title}
                         </h3>
@@ -102,13 +140,15 @@ export default function CoursesClient({ topics }: { topics: any[] }) {
                         </p>
                       </div>
 
-                      <p className="mt-4 text-xs font-medium text-[#304635]">
-                        Duration: {course.duration}
-                      </p>
+                      <div>
+                        <p className="mt-4 text-xs font-medium text-[#304635]">
+                          Duration: {course.duration}
+                        </p>
 
-                      <span className="mt-3 text-sm font-semibold text-[#304635]">
-                        View →
-                      </span>
+                        <span className="mt-3 inline-block text-sm font-semibold text-[#304635]">
+                          View →
+                        </span>
+                      </div>
                     </Link>
                   </motion.div>
                 ))}
@@ -125,6 +165,7 @@ export default function CoursesClient({ topics }: { topics: any[] }) {
         <h2 className="text-3xl font-bold text-[#304635]">
           Need a Custom Training Plan?
         </h2>
+
         <p className="mt-3 text-gray-700">
           We design enterprise programs tailored to your organisation.
         </p>
