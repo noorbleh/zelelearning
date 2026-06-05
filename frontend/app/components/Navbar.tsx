@@ -90,7 +90,7 @@ export default function Navbar() {
                 <Link href="/about" onClick={() => setOpen(false)}>About</Link>
                 <Link href="/contact" onClick={() => setOpen(false)}>Contact</Link>
                 <Link href="/vacation-learning" onClick={() => setOpen(false)}>Vacation Learning</Link>
-                <Link href="/special-50" onClick={() => setOpen(false)}>50+ Learning</Link>
+                <Link href="/special50" onClick={() => setOpen(false)}>50+ Learning</Link>
 
                 <Link
                   href="/contact"
