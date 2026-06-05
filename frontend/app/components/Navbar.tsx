@@ -37,6 +37,7 @@ export default function Navbar() {
             <Link href="/about" className="hover:text-[#304635] transition">About</Link>
             <Link href="/contact" className="hover:text-[#304635] transition">Contact</Link>
             <Link href="/vacation-learning" className="hover:text-[#304635] transition">Vacation Learning</Link>
+            <Link href="/special50" className="hover:text-[#304635] transition">50+ Learning</Link>
           </div>
 
           {/* Desktop CTA */}
@@ -88,6 +89,8 @@ export default function Navbar() {
                 <Link href="/courses" onClick={() => setOpen(false)}>Courses</Link>
                 <Link href="/about" onClick={() => setOpen(false)}>About</Link>
                 <Link href="/contact" onClick={() => setOpen(false)}>Contact</Link>
+                <Link href="/vacation-learning" onClick={() => setOpen(false)}>Vacation Learning</Link>
+                <Link href="/special-50" onClick={() => setOpen(false)}>50+ Learning</Link>
 
                 <Link
                   href="/contact"

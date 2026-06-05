@@ -9,39 +9,67 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen overflow-hidden flex items-center justify-center bg-[#f4efe9]">
 
-      {/* 🌊 FLOW LAYER 1 (VISIBLE) */}
-      <motion.div
-        className="absolute w-[140%] h-[140%]"
-        initial={{ x: "-30%", y: "-30%" }}
-        animate={{
-          x: ["-30%", "20%", "-30%"],
-          y: ["-30%", "20%", "-30%"],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      >
-        <div className="w-full h-full bg-gradient-to-br from-[#c6a96f]/40 via-transparent to-[#304635]/40 blur-[60px]" />
-      </motion.div>
+      {/* ✨ FLOATING STARS */}
 
-      {/* 🌊 FLOW LAYER 2 */}
-      <motion.div
-        className="absolute w-[120%] h-[120%]"
-        initial={{ x: "20%", y: "20%" }}
-        animate={{
-          x: ["20%", "-20%", "20%"],
-          y: ["20%", "-20%", "20%"],
-        }}
-        transition={{
-          duration: 12,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      >
-        <div className="w-full h-full bg-gradient-to-tr from-[#304635]/30 via-transparent to-[#c6a96f]/30 blur-[50px]" />
-      </motion.div>
+<div className="absolute inset-0 overflow-hidden pointer-events-none">
+
+  {/* SOFT GLOW */}
+
+  <motion.div
+    className="absolute -top-40 right-0 w-[500px] h-[500px] rounded-full"
+    style={{
+      background:
+        "radial-gradient(circle, rgba(198,169,111,0.12) 0%, transparent 70%)",
+    }}
+    animate={{
+      scale: [1, 1.08, 1],
+    }}
+    transition={{
+      duration: 12,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+  />
+
+  {/* STARS */}
+
+  {[
+    { left: "10%", top: "20%", size: "w-2 h-2" },
+    { left: "20%", top: "65%", size: "w-1.5 h-1.5" },
+    { left: "35%", top: "15%", size: "w-2 h-2" },
+    { left: "48%", top: "75%", size: "w-1.5 h-1.5" },
+    { left: "60%", top: "12%", size: "w-2 h-2" },
+    { left: "72%", top: "25%", size: "w-1.5 h-1.5" },
+    { left: "85%", top: "18%", size: "w-2 h-2" },
+    { left: "90%", top: "60%", size: "w-1.5 h-1.5" },
+    { left: "75%", top: "78%", size: "w-2 h-2" },
+    { left: "15%", top: "40%", size: "w-1.5 h-1.5" },
+    { left: "92%", top: "40%", size: "w-2 h-2" },
+    { left: "5%", top: "80%", size: "w-1.5 h-1.5" },
+  ].map((star, i) => (
+    <motion.div
+      key={i}
+      className={`absolute ${star.size} rounded-full`}
+      style={{
+        left: star.left,
+        top: star.top,
+        backgroundColor: "#304635",
+      }}
+      animate={{
+        opacity: [0.2, 1, 0.2],
+        scale: [1, 1.8, 1],
+      }}
+      transition={{
+        duration: 2 + (i % 4),
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+    >
+      <div className="absolute inset-0 rounded-full bg-[#6c8a71]/50 blur-sm scale-[3]" />
+    </motion.div>
+  ))}
+
+</div>
 
       {/* CONTENT */}
       <div className="relative z-10 text-center px-6 max-w-5xl">
