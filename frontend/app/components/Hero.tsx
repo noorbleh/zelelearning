@@ -1,7 +1,6 @@
 "use client"
 
 import { motion } from "framer-motion"
-import Link from "next/link"
 
 export default function Hero() {
   const headline = "Future-Ready Learning for Modern Enterprises".split(" ")
@@ -9,87 +8,156 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen overflow-hidden flex items-center justify-center bg-[#f4efe9]">
 
-      {/* ✨ FLOATING STARS */}
+      {/* AURORA + GLASS BACKGROUND */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
 
-<div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Aurora 1 */}
+        <motion.div
+          className="absolute -top-40 -left-40 w-[800px] h-[800px] rounded-full blur-[120px]"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(48,70,53,0.18) 0%, transparent 70%)",
+          }}
+          animate={{
+            x: [0, 100, 0],
+            y: [0, 50, 0],
+            scale: [1, 1.08, 1],
+          }}
+          transition={{
+            duration: 28,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
 
-  {/* SOFT GLOW */}
+        {/* Aurora 2 */}
+        <motion.div
+          className="absolute top-[10%] right-[-10%] w-[700px] h-[700px] rounded-full blur-[120px]"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(198,169,111,0.16) 0%, transparent 70%)",
+          }}
+          animate={{
+            x: [0, -120, 0],
+            y: [0, -60, 0],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            duration: 34,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
 
-  <motion.div
-    className="absolute -top-40 right-0 w-[500px] h-[500px] rounded-full"
-    style={{
-      background:
-        "radial-gradient(circle, rgba(198,169,111,0.12) 0%, transparent 70%)",
-    }}
-    animate={{
-      scale: [1, 1.08, 1],
-    }}
-    transition={{
-      duration: 12,
-      repeat: Infinity,
-      ease: "easeInOut",
-    }}
-  />
+        {/* Aurora 3 */}
+        <motion.div
+          className="absolute bottom-[-20%] left-[20%] w-[600px] h-[600px] rounded-full blur-[110px]"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(108,138,113,0.14) 0%, transparent 70%)",
+          }}
+          animate={{
+            x: [0, 60, 0],
+            y: [0, -80, 0],
+            scale: [1, 1.06, 1],
+          }}
+          transition={{
+            duration: 32,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
 
-  {/* STARS */}
+        {/* Glass Panel 1 */}
+        <motion.div
+          className="
+            absolute
+            top-[12%]
+            right-[8%]
+            w-[260px]
+            h-[380px]
+            rounded-[40px]
+            border
+            border-white/20
+            bg-white/10
+            backdrop-blur-xl
+          "
+          animate={{
+            y: [0, -20, 0],
+            rotate: [-2, 1, -2],
+          }}
+          transition={{
+            duration: 18,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
 
-  {[
-    { left: "10%", top: "20%", size: "w-2 h-2" },
-    { left: "20%", top: "65%", size: "w-1.5 h-1.5" },
-    { left: "35%", top: "15%", size: "w-2 h-2" },
-    { left: "48%", top: "75%", size: "w-1.5 h-1.5" },
-    { left: "60%", top: "12%", size: "w-2 h-2" },
-    { left: "72%", top: "25%", size: "w-1.5 h-1.5" },
-    { left: "85%", top: "18%", size: "w-2 h-2" },
-    { left: "90%", top: "60%", size: "w-1.5 h-1.5" },
-    { left: "75%", top: "78%", size: "w-2 h-2" },
-    { left: "15%", top: "40%", size: "w-1.5 h-1.5" },
-    { left: "92%", top: "40%", size: "w-2 h-2" },
-    { left: "5%", top: "80%", size: "w-1.5 h-1.5" },
-  ].map((star, i) => (
-    <motion.div
-      key={i}
-      className={`absolute ${star.size} rounded-full`}
-      style={{
-        left: star.left,
-        top: star.top,
-        backgroundColor: "#304635",
-      }}
-      animate={{
-        opacity: [0.2, 1, 0.2],
-        scale: [1, 1.8, 1],
-      }}
-      transition={{
-        duration: 2 + (i % 4),
-        repeat: Infinity,
-        ease: "easeInOut",
-      }}
-    >
-      <div className="absolute inset-0 rounded-full bg-[#6c8a71]/50 blur-sm scale-[3]" />
-    </motion.div>
-  ))}
-
-</div>
+        {/* Glass Panel 2 */}
+        <motion.div
+          className="
+            absolute
+            bottom-[10%]
+            left-[6%]
+            w-[220px]
+            h-[320px]
+            rounded-[32px]
+            border
+            border-white/15
+            bg-white/5
+            backdrop-blur-lg
+          "
+          animate={{
+            y: [0, 15, 0],
+            rotate: [2, -1, 2],
+          }}
+          transition={{
+            duration: 22,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      </div>
 
       {/* CONTENT */}
       <div className="relative z-10 text-center px-6 max-w-5xl">
 
         <motion.p
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-sm tracking-widest uppercase text-gray-600"
+          transition={{ duration: 0.8 }}
+          className="
+            text-sm
+            tracking-[0.35em]
+            uppercase
+            text-[#304635]/70
+          "
         >
           Corporate Training & Consulting
         </motion.p>
 
-        <h1 className="mt-6 text-5xl md:text-7xl font-bold tracking-tight text-[#304635]">
+        <h1
+          className="
+            mt-6
+            text-5xl
+            md:text-7xl
+            lg:text-8xl
+            font-semibold
+            tracking-tight
+            text-[#304635]
+            leading-[0.95]
+          "
+        >
           {headline.map((word, i) => (
             <motion.span
               key={i}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 35 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.06 }}
-              className="inline-block mr-3"
+              transition={{
+                delay: i * 0.05,
+                duration: 0.8,
+              }}
+              className="inline-block mr-4"
             >
               {word}
             </motion.span>
@@ -99,34 +167,44 @@ export default function Hero() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          className="mt-6 max-w-2xl mx-auto text-lg text-gray-700"
+          transition={{
+            delay: 0.5,
+            duration: 1,
+          }}
+          className="
+            mt-8
+            max-w-2xl
+            mx-auto
+            text-lg
+            text-gray-700
+            leading-relaxed
+          "
         >
-          Zèle Learning delivers expert-led corporate training across technology,
-          engineering and emerging industries.
+          Zèle Learning delivers expert-led corporate training across
+          technology, engineering, architecture, and emerging industries,
+          helping organisations build future-ready capabilities.
         </motion.p>
-
-        <motion.div
-          className="mt-10"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-        >
-          <Link
-            href="/courses"
-            className="px-8 py-3 rounded-full bg-[#304635] text-white font-medium text-sm shadow-lg hover:scale-105 transition"
-          >
-            Explore Programs
-          </Link>
-        </motion.div>
 
       </div>
 
-      {/* SCROLL */}
+      {/* Scroll Indicator */}
       <motion.div
-        className="absolute bottom-10 text-gray-500 text-xs tracking-widest uppercase"
-        animate={{ y: [0, 8, 0], opacity: [0.4, 1, 0.4] }}
-        transition={{ duration: 2.2, repeat: Infinity }}
+        className="
+          absolute
+          bottom-10
+          text-[#304635]/60
+          text-xs
+          tracking-[0.3em]
+          uppercase
+        "
+        animate={{
+          y: [0, 8, 0],
+          opacity: [0.4, 1, 0.4],
+        }}
+        transition={{
+          duration: 2.5,
+          repeat: Infinity,
+        }}
       >
         Scroll
       </motion.div>
