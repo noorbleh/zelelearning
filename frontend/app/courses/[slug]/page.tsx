@@ -3,7 +3,24 @@ import { notFound } from "next/navigation"
 import Link from "next/link"
 import NeuralScene from "@/app/components/course/NeuralScene"
 
-async function getCourse(slug: string) {
+// ─── Types ───────────────────────────────────────────────────────────────────
+
+type Course = {
+  title: string
+  shortDescription?: string
+  duration?: string
+  level?: string
+  outcomes?: string[]
+  prerequisites?: string
+  topic?: {
+    title: string
+    bannerImage?: string
+  }
+}
+
+// ─── Data ─────────────────────────────────────────────────────────────────────
+
+async function getCourse(slug: string): Promise<Course | null> {
   const query = `
     *[_type=="course" && slug.current == $slug][0]{
       title,
@@ -12,16 +29,16 @@ async function getCourse(slug: string) {
       level,
       outcomes,
       prerequisites,
-
       topic->{
         title,
         "bannerImage": bannerImage.asset->url
       }
     }
   `
-
   return await sanity.fetch(query, { slug })
 }
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default async function CourseDetail({
   params,
@@ -29,204 +46,173 @@ export default async function CourseDetail({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-
   const course = await getCourse(slug)
 
   if (!course) return notFound()
 
+  const bannerImage =
+    course.topic?.bannerImage ??
+    "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2000&auto=format&fit=crop"
+
   return (
-    <main className="bg-[#f4efe9] text-[#304635] min-h-screen overflow-hidden">
+    <main className="min-h-screen overflow-hidden bg-cream text-primary">
 
-      {/* HERO */}
-      <section className="relative min-h-[92vh] flex items-center overflow-hidden">
+      {/* Hero */}
+      <section className="relative flex min-h-[92vh] items-center overflow-hidden">
 
-        {/* BACKGROUND IMAGE */}
+        {/* Background image */}
         <div
           className="absolute inset-0 z-0 bg-cover bg-center"
-          style={{
-            backgroundImage: course.topic?.bannerImage
-              ? `url(${course.topic.bannerImage})`
-              : `url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2000&auto=format&fit=crop")`,
-          }}
+          style={{ backgroundImage: `url(${bannerImage})` }}
         />
 
-        {/* DARK OVERLAY */}
-        <div className="absolute inset-0 z-10 bg-[#304635]/55" />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 z-10 bg-primary/55" />
 
-        {/* PARTICLES */}
+        {/* Particles */}
         <div className="absolute inset-0 z-20">
           <NeuralScene />
         </div>
 
-        {/* SOFT GRADIENT */}
-        <div className="absolute inset-0 z-20 bg-gradient-to-b from-black/10 via-transparent to-[#f4efe9]" />
+        {/* Gradient fade to page background */}
+        <div className="absolute inset-0 z-20 bg-gradient-to-b from-black/10 via-transparent to-cream" />
 
-        {/* CONTENT */}
-        <div className="relative z-30 max-w-7xl mx-auto px-6 w-full pt-32 pb-40">
+        {/* Content */}
+        <div className="relative z-30 mx-auto w-full max-w-7xl px-6 pb-40 pt-32">
 
-          {/* BACK */}
           <Link
             href="/courses"
-            className="text-[#dfe7d8] hover:text-white transition"
+            className="text-cream/70 transition hover:text-cream-light"
           >
             ← Back to Courses
           </Link>
 
-          {/* TOPIC */}
-          <div className="mt-8">
-            <span className="px-4 py-2 rounded-full bg-white/15 backdrop-blur border border-white/10 text-white text-sm uppercase tracking-[0.2em]">
-              {course.topic?.title}
-            </span>
-          </div>
+          {course.topic?.title && (
+            <div className="mt-8">
+              <span className="rounded-full border border-white/10 bg-white/15 px-4 py-2 text-sm uppercase tracking-[0.2em] text-white backdrop-blur">
+                {course.topic.title}
+              </span>
+            </div>
+          )}
 
-          {/* TITLE */}
-          <h1 className="mt-8 max-w-4xl text-5xl md:text-7xl font-bold text-white leading-[0.95] tracking-tight">
+          <h1 className="mt-8 max-w-4xl font-serif text-5xl font-bold leading-[0.95] tracking-tight text-white md:text-7xl">
             {course.title}
           </h1>
 
-          {/* DESCRIPTION */}
-          <p className="mt-8 text-lg md:text-xl text-[#e8efe4] leading-relaxed max-w-3xl">
-            {course.shortDescription ||
+          <p className="mt-8 max-w-3xl text-lg leading-relaxed text-cream/80 md:text-xl">
+            {course.shortDescription ??
               "Premium enterprise learning experience designed for future-focused teams."}
           </p>
 
-          {/* META */}
+          {/* Meta badges */}
           <div className="mt-10 flex flex-wrap gap-4">
-
             {course.duration && (
-              <div className="px-5 py-3 rounded-2xl bg-white/15 backdrop-blur text-white border border-white/10">
+              <div className="rounded-2xl border border-white/10 bg-white/15 px-5 py-3 text-white backdrop-blur">
                 {course.duration}
               </div>
             )}
-
             {course.level && (
-              <div className="px-5 py-3 rounded-2xl bg-[#dce7d4] text-[#304635] font-semibold">
+              <div className="rounded-2xl bg-cream/90 px-5 py-3 font-semibold text-primary">
                 {course.level}
               </div>
             )}
-
           </div>
 
-          {/* BUTTONS */}
+          {/* CTA buttons */}
           <div className="mt-10 flex flex-wrap gap-4">
-
             <Link
               href="/contact"
-              className="px-8 py-4 rounded-full bg-[#dce7d4] text-[#304635] font-semibold hover:scale-105 transition-transform"
+              className="rounded-full bg-cream px-8 py-4 font-semibold text-primary transition-transform hover:scale-105"
             >
               Enquire Now
             </Link>
-
             <Link
               href="/courses"
-              className="px-8 py-4 rounded-full border border-white/20 text-white hover:bg-white/10 transition"
+              className="rounded-full border border-white/20 px-8 py-4 text-white transition hover:bg-white/10"
             >
               Explore Courses
             </Link>
-
           </div>
 
         </div>
       </section>
 
-      {/* CONTENT */}
+      {/* Course content */}
       <section className="relative z-20 -mt-8 px-6 pb-28">
+        <div className="mx-auto grid max-w-7xl gap-10 xl:grid-cols-3">
 
-        <div className="max-w-7xl mx-auto grid xl:grid-cols-3 gap-10">
+          {/* Main content */}
+          <div className="space-y-8 xl:col-span-2">
 
-          {/* LEFT */}
-          <div className="xl:col-span-2 space-y-8">
-
-            {/* OUTCOMES */}
-            <div className="bg-white/80 backdrop-blur rounded-[32px] p-10 border border-black/5 shadow-sm">
-
-              <h2 className="text-3xl font-bold">
+            {/* Learning outcomes */}
+            <div className="rounded-[32px] border border-primary/5 bg-cream-light/80 p-10 shadow-sm backdrop-blur">
+              <h2 className="font-serif text-3xl font-bold text-primary">
                 Learning Outcomes
               </h2>
 
               <div className="mt-8 space-y-5">
-
                 {course.outcomes?.length ? (
-                  course.outcomes.map(
-                    (item: string, i: number) => (
-                      <div
-                        key={i}
-                        className="flex gap-4"
-                      >
-                        <div className="w-7 h-7 rounded-full bg-[#dce7d4] flex items-center justify-center text-sm font-bold">
-                          ✓
-                        </div>
-
-                        <p className="text-gray-700 text-lg leading-relaxed">
-                          {item}
-                        </p>
+                  course.outcomes.map((item, i) => (
+                    <div key={i} className="flex gap-4">
+                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
+                        ✓
                       </div>
-                    )
-                  )
+                      <p className="text-lg leading-relaxed text-primary/70">
+                        {item}
+                      </p>
+                    </div>
+                  ))
                 ) : (
-                  <p className="text-gray-600">
+                  <p className="text-primary/60">
                     Outcomes will be updated soon.
                   </p>
                 )}
-
               </div>
-
             </div>
 
-            {/* PREREQUISITES */}
-            <div className="bg-white/80 backdrop-blur rounded-[32px] p-10 border border-black/5 shadow-sm">
-
-              <h2 className="text-3xl font-bold">
+            {/* Prerequisites */}
+            <div className="rounded-[32px] border border-primary/5 bg-cream-light/80 p-10 shadow-sm backdrop-blur">
+              <h2 className="font-serif text-3xl font-bold text-primary">
                 Prerequisites
               </h2>
-
-              <p className="mt-6 text-gray-700 text-lg leading-relaxed">
-                {course.prerequisites ||
+              <p className="mt-6 text-lg leading-relaxed text-primary/70">
+                {course.prerequisites ??
                   "No mandatory prerequisites required."}
               </p>
-
             </div>
 
           </div>
 
-          {/* SIDEBAR */}
+          {/* Sidebar */}
           <div>
-
-            <div className="sticky top-28 bg-white/80 backdrop-blur rounded-[32px] p-8 border border-black/5 shadow-sm">
-
-              <h3 className="text-2xl font-bold">
+            <div className="sticky top-28 rounded-[32px] border border-primary/5 bg-cream-light/80 p-8 shadow-sm backdrop-blur">
+              <h3 className="font-serif text-2xl font-bold text-primary">
                 Enterprise Learning
               </h3>
 
-              <p className="mt-4 text-gray-600 leading-relaxed">
+              <p className="mt-4 leading-relaxed text-primary/60">
                 Tailored learning experiences for enterprises,
                 institutions, and professional cohorts.
               </p>
 
               <div className="mt-8 space-y-4">
-
                 <Link
                   href="/contact"
-                  className="block text-center px-6 py-4 rounded-2xl bg-[#304635] text-white font-medium hover:scale-[1.02] transition-transform"
+                  className="block rounded-2xl bg-primary px-6 py-4 text-center font-medium text-cream-light transition-transform hover:scale-[1.02]"
                 >
                   Contact Zèle
                 </Link>
-
                 <Link
                   href="/courses"
-                  className="block text-center px-6 py-4 rounded-2xl border border-[#304635]/10 font-medium hover:bg-[#f8f6f2]"
+                  className="block rounded-2xl border border-primary/10 px-6 py-4 text-center font-medium text-primary transition hover:bg-cream"
                 >
                   Browse Courses
                 </Link>
-
               </div>
-
             </div>
-
           </div>
 
         </div>
-
       </section>
 
     </main>
