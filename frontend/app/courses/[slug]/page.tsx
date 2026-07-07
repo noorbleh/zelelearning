@@ -10,6 +10,7 @@ type Course = {
   shortDescription?: string
   duration?: string
   level?: string
+  overview?: string
   outcomes?: string[]
   prerequisites?: string
   topic?: {
@@ -27,6 +28,7 @@ async function getCourse(slug: string): Promise<Course | null> {
       shortDescription,
       duration,
       level,
+      overview,
       outcomes,
       prerequisites,
       topic->{
@@ -143,6 +145,16 @@ export default async function CourseDetail({
 
           {/* Main content */}
           <div className="space-y-8 xl:col-span-2">
+
+            {/* Course overview */}
+            <div className="rounded-[32px] border border-primary/5 bg-cream-light/80 p-10 shadow-sm backdrop-blur">
+              <h2 className="font-serif text-3xl font-bold text-primary">
+                Course Overview
+              </h2>
+              <p className="mt-6 whitespace-pre-line text-lg leading-relaxed text-primary/70">
+                {course.overview ?? "Course overview will be updated soon."}
+              </p>
+            </div>
 
             {/* Learning outcomes */}
             <div className="rounded-[32px] border border-primary/5 bg-cream-light/80 p-10 shadow-sm backdrop-blur">
