@@ -5,22 +5,22 @@ import { motion } from "framer-motion"
 const steps = [
   {
     letter: "D",
-    title: "Discover",
+    title: "Direct",
     desc: "Identify business objectives and team skill gaps through strategic assessment."
   },
   {
     letter: "E",
-    title: "Engage",
+    title: "Expert",
     desc: "Direct engagement with industry experts ensures high-value knowledge transfer."
   },
   {
     letter: "E",
-    title: "Enable",
+    title: "Engagement",
     desc: "Hands-on projects and guided practice convert learning into capability."
   },
   {
     letter: "M",
-    title: "Measure",
+    title: "Model",
     desc: "Track progress and business impact to deliver measurable outcomes."
   }
 ]
