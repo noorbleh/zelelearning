@@ -1,3 +1,4 @@
+
 "use client"
 
 import { motion } from "framer-motion"
@@ -9,12 +10,12 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState("")
 
-  async function handleSubmit(e: any) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setLoading(true)
     setError("")
 
-    const formData = new FormData(e.target)
+    const formData = new FormData(e.currentTarget)
 
     const payload = {
       name: formData.get("name"),
@@ -22,6 +23,7 @@ export default function ContactPage() {
       organisation: formData.get("organisation"),
       trainingMode: formData.get("trainingMode"),
       message: formData.get("message"),
+      website: formData.get("website"),
     }
 
     try {
@@ -34,13 +36,19 @@ export default function ContactPage() {
       const data = await res.json()
 
       if (!res.ok) {
-        throw new Error(data.error || "Failed to send message")
+        throw new Error(
+          data.error || "Failed to send message. Please try again."
+        )
       }
 
       setSubmitted(true)
 
-    } catch (err: any) {
-      setError(err.message || "Something went wrong.")
+    } catch (err: unknown) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again."
+      )
     } finally {
       setLoading(false)
     }
@@ -83,30 +91,44 @@ export default function ContactPage() {
             >
               {/* Name */}
               <div>
-                <label className="text-sm text-gray-600">Full Name</label>
+                <label className="text-sm text-gray-600">
+                  Full Name
+                </label>
                 <input
                   name="name"
+                  type="text"
                   required
+                  maxLength={100}
+                  autoComplete="name"
                   className="mt-2 w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#304635]/40 outline-none"
                 />
               </div>
 
               {/* Email */}
               <div>
-                <label className="text-sm text-gray-600">Email</label>
+                <label className="text-sm text-gray-600">
+                  Email
+                </label>
                 <input
                   name="email"
                   type="email"
                   required
+                  maxLength={254}
+                  autoComplete="email"
                   className="mt-2 w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#304635]/40 outline-none"
                 />
               </div>
 
               {/* Organisation */}
               <div>
-                <label className="text-sm text-gray-600">Organisation</label>
+                <label className="text-sm text-gray-600">
+                  Organisation
+                </label>
                 <input
                   name="organisation"
+                  type="text"
+                  maxLength={150}
+                  autoComplete="organization"
                   className="mt-2 w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#304635]/40 outline-none"
                 />
               </div>
@@ -122,26 +144,49 @@ export default function ContactPage() {
                   className="mt-2 w-full px-4 py-3 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-[#304635]/40 outline-none"
                 >
                   <option value="">Select an option</option>
-                  <option>Online Training</option>
-                  <option>On-site Training</option>
-                  <option>Hybrid Training</option>
+                  <option value="Online Training">Online Training</option>
+                  <option value="On-site Training">On-site Training</option>
+                  <option value="Hybrid Training">Hybrid Training</option>
                 </select>
               </div>
 
               {/* Message */}
               <div>
-                <label className="text-sm text-gray-600">Message</label>
+                <label className="text-sm text-gray-600">
+                  Message
+                </label>
                 <textarea
                   name="message"
                   rows={5}
                   required
+                  maxLength={5000}
                   className="mt-2 w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#304635]/40 outline-none"
+                />
+              </div>
+
+              {/* Honeypot - hidden from genuine visitors */}
+              <div
+                aria-hidden="true"
+                className="absolute w-px h-px overflow-hidden opacity-0 pointer-events-none"
+              >
+                <label htmlFor="website">
+                  Leave this field empty
+                </label>
+                <input
+                  id="website"
+                  name="website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
                 />
               </div>
 
               {/* Error */}
               {error && (
-                <p className="text-sm text-red-600 text-center">
+                <p
+                  role="alert"
+                  className="text-sm text-red-600 text-center"
+                >
                   {error}
                 </p>
               )}
@@ -154,6 +199,7 @@ export default function ContactPage() {
                   w-full py-3 rounded-full bg-[#304635]
                   text-white font-medium
                   hover:scale-105 transition
+                  disabled:opacity-60 disabled:cursor-not-allowed
                 "
               >
                 {loading ? "Sending..." : "Send Message"}
@@ -163,7 +209,7 @@ export default function ContactPage() {
 
           ) : (
 
-            // SUCCESS STATE
+            /* SUCCESS STATE */
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -191,7 +237,7 @@ export default function ContactPage() {
               </h2>
 
               <p className="mt-3 text-gray-700">
-                We’ve received your message.  
+                We’ve received your message.
                 Our team will get back to you shortly.
               </p>
             </motion.div>
